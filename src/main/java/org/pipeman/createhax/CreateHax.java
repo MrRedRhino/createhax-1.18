@@ -1,14 +1,10 @@
 package org.pipeman.createhax;
 
-import mod.pipeman.createhax.hax.*;
-import org.pipeman.createhax.hax.ShowContraptionInv;
-import org.pipeman.createhax.hax.SuperSponge;
-import org.pipeman.createhax.hax.VillagerTradeFinder;
-import org.pipeman.createhax.hax.bb.BedrockBreaker;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import org.pipeman.createhax.hax.FlyHack;
+import org.pipeman.createhax.hax.*;
+import org.pipeman.createhax.hax.bb.BedrockBreaker;
 
 @Mod("createhax")
 public class CreateHax {
@@ -26,8 +22,6 @@ public class CreateHax {
         new BedrockBreaker();
 
         new ShowContraptionInv();
-
-//        new LightspeedTrader();
 
         new VillagerTradeFinder();
     } // TODO fix mixins
