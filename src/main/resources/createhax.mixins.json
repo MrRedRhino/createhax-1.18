@@ -4,9 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "createhax.refmap.json",
   "mixins": [
+    "ToolsMixin"
   ],
   "client": [
-    "MerchantScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
