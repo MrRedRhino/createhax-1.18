@@ -51,7 +51,7 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run')
+            workingDirectory project.file('run-server')
 
             // "SCAN": For mods scan.
             // "REGISTRIES": For firing of registry events.

@@ -50,11 +50,8 @@ public class ShowContraptionInv {
                         if (!is.isEmpty()) {
                             usedSlots++;
 
-                            if (!items.containsKey(item)) {
-                                items.put(item, is.getCount());
-                            } else {
-                                items.replace(item, items.get(item) + is.getCount());
-                            }
+                            if (!items.containsKey(item)) items.put(item, is.getCount());
+                            else items.replace(item, items.get(item) + is.getCount());
                         }
                     }
                 }
