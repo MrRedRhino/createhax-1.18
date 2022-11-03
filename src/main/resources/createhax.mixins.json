@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "org.pipeman.createhax.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "createhax.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "MerchantScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
