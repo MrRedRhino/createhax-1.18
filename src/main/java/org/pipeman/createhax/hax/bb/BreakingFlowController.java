@@ -40,7 +40,7 @@ public class BreakingFlowController {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
 
-        if (!"survival".equals(minecraftClient.gameMode.getPlayerMode().getName())) {
+        if (mc.gameMode == null || player == null || !"survival".equals(mc.gameMode.getPlayerMode().getName())) {
             return;
         }
 
