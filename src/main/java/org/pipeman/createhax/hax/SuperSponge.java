@@ -78,7 +78,14 @@ public class SuperSponge implements IHack {
             } else {
                 this.running = false;
             }
+        } else {
+            Util.showToggleMessage(getName(), false);
         }
+    }
+
+    @Override
+    public boolean showToggleMessage() {
+        return false;
     }
 
     @Override

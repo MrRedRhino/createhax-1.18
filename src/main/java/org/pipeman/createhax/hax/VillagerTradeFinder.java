@@ -105,7 +105,6 @@ public class VillagerTradeFinder implements IHack {
     public void setRunning(boolean running) {
         this.running = running;
 
-        Util.showToggleMessage(getName(), running);
         stage = 1;
         if (running) {
             Util.sendChatMessage("Left click a bearing, left click a hand crank, right click a villager and send the " +

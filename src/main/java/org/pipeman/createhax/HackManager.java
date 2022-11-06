@@ -51,6 +51,7 @@ public class HackManager {
 
             if (ts.toggleKey.isDown() && !ts.hotkeyDown) {
                 hack.setRunning(!hack.isRunning());
+                if (hack.showToggleMessage()) Util.showToggleMessage(hack.getName(), hack.isRunning());
             }
             ts.hotkeyDown = ts.toggleKey.isDown();
         }

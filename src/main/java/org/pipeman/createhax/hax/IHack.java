@@ -14,4 +14,8 @@ public interface IHack {
     default void onModify(double delta) {
 
     }
+
+    default boolean showToggleMessage() {
+        return true;
+    }
 }
