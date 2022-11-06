@@ -74,7 +74,7 @@ public class Util {
                     sendChatMessage(hackName + " needs the following items to work:");
                 }
                 hasBlocks = false;
-                sendChatMessage(" - §a\"" + stack.getDescriptionId());
+                sendChatMessage(" - §a" + stack.getDescriptionId());
             }
         }
         return hasBlocks;
