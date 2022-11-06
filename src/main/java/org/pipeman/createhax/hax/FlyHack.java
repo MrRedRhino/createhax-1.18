@@ -9,12 +9,12 @@ import java.text.DecimalFormat;
 import static org.pipeman.createhax.CreateHax.MC;
 
 public class FlyHack implements IHack {
-    private float speed = 1;
+    private float speed = 0.05f;
     private boolean running = false;
 
     @Override
     public void onModify(double delta) {
-        speed = (float) Math.max(0.1f, speed + delta / 10);
+        speed = (float) Math.max(0, speed + delta / 100);
 
         DecimalFormat df = new DecimalFormat("#.##");
         Util.sendActionbarMessage("Fly speed set to: §2" + df.format(speed));
@@ -37,6 +37,7 @@ public class FlyHack implements IHack {
 
         if (MC.player == null) return;
         MC.player.getAbilities().mayfly = running;
+        MC.player.getAbilities().flying = running;
     }
 
     @Override
