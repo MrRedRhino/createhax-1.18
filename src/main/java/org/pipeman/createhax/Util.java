@@ -18,7 +18,7 @@ public class Util {
         if (MC.getConnection() == null) return;
 
         BlockHitResult result = new BlockHitResult(
-                new Vec3(0, 0, 0), dir, pos, false);
+                new Vec3(pos.getX(), pos.getY(), pos.getZ()), dir, pos, false);
         MC.getConnection().send(new ServerboundUseItemOnPacket(InteractionHand.MAIN_HAND, result));
     }
 
