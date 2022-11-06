@@ -129,10 +129,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18-38.0.17'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.60'
 
-    implementation fg.deobf("com.simibubi.create:Create:mc${create_version}")
-    implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:${flywheel_version}")
+    implementation fg.deobf("com.simibubi.create:Create:mc1.18.2_v0.5.0c+146")
+    implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:1.18-0.6.4.87")
 
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency

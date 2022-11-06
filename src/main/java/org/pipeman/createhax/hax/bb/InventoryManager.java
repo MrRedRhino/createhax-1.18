@@ -87,7 +87,8 @@ public class InventoryManager {
             f *= k;
         }
 
-        if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
+
+        if (player.m_204029_(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
             f /= 5.0F;
         }
 

@@ -1,5 +1,6 @@
 package org.pipeman.createhax.hax.bb;
 
+import net.minecraft.core.Vec3i;
 import org.pipeman.createhax.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -36,8 +37,8 @@ public class BreakingFlowController {
         if (InventoryManager.warningMessage() != null) {
             return;
         }
-        Minecraft minecraftClient = Minecraft.getInstance();
-        Player player = minecraftClient.player;
+        Minecraft mc = Minecraft.getInstance();
+        Player player = mc.player;
 
         if (!"survival".equals(minecraftClient.gameMode.getPlayerMode().getName())) {
             return;
@@ -71,12 +72,12 @@ public class BreakingFlowController {
         double y = player.getY();
         double z = player.getZ();
 
-        return (blockPos.distSqr(x, y, z, true) <= (float) 3.4 * (float) 3.4);
+        return (blockPos.distSqr(new Vec3i(x, y, z)) <= (float) 3.4 * (float) 3.4);
     }
 
     private static boolean shouldAddNewTargetBlock(BlockPos pos){
         for (TargetBlock targetBlock : cachedTargetBlockList) {
-            if (targetBlock.getBlockPos().distSqr(pos.getX(), pos.getY(), pos.getZ(), false) == 0) {
+            if (targetBlock.getBlockPos().distSqr(new Vec3i(pos.getX(), pos.getY(), pos.getZ())) == 0) {
                 return false;
             }
         }
