@@ -1,7 +1,17 @@
 package org.pipeman.createhax.hax;
 
 public interface IHack {
-    boolean isOn();
+    boolean isRunning();
+
+    void setRunning(boolean running);
 
     String getName();
+
+    default void saveTick() {
+
+    }
+
+    default void onModify(double delta) {
+
+    }
 }

@@ -1,9 +1,12 @@
 package org.pipeman.createhax;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import org.pipeman.createhax.hax.*;
+import org.pipeman.createhax.hax.FlyHack;
+import org.pipeman.createhax.hax.ShowContraptionInv;
+import org.pipeman.createhax.hax.SuperSponge;
+import org.pipeman.createhax.hax.VillagerTradeFinder;
 import org.pipeman.createhax.hax.bb.BedrockBreaker;
 
 @Mod("createhax")
@@ -11,18 +14,14 @@ public class CreateHax {
     public static final Minecraft MC = Minecraft.getInstance();
 
     public CreateHax() {
-        MinecraftForge.EVENT_BUS.register(new ActiveHaxRenderer());
-        new FlyHack();
-//        MinecraftForge.EVENT_BUS.register(flyHackInst);
+        HackManager.INSTANCE.registerHack(new FlyHack(), new KeyMapping("Fly-Hack", 66, "Hax"));
 
-        new SuperSponge();
-//        MinecraftForge.EVENT_BUS.register(spongeInst);
-//        ActiveHaxRenderer.registerHack(f);
+        HackManager.INSTANCE.registerHack(new SuperSponge(), new KeyMapping("Super Sponge", 66, "Hax"));
 
-        new BedrockBreaker();
+        HackManager.INSTANCE.registerHack(new VillagerTradeFinder(), new KeyMapping("Villager trade finder", 66, "Hax"));
 
-        new ShowContraptionInv();
+        HackManager.INSTANCE.registerHack(new BedrockBreaker(), new KeyMapping("Bedrock-Breaker", 66, "Hax"));
 
-        new VillagerTradeFinder();
-    } // TODO fix mixins
+        HackManager.INSTANCE.registerHack(new ShowContraptionInv(), new KeyMapping("Show contraption inventory hotkey", 66, "Hax"));
+    }
 }

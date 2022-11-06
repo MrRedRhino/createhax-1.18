@@ -2,46 +2,30 @@ package org.pipeman.createhax.hax;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.sync.ClientMotionPacket;
 import com.simibubi.create.foundation.networking.AllPackets;
-import org.pipeman.createhax.ActiveHaxRenderer;
-import org.pipeman.createhax.Util;
-import net.minecraft.client.KeyMapping;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraft.util.Mth;
+import org.pipeman.createhax.Util;
 
 import java.text.DecimalFormat;
 
 import static org.pipeman.createhax.CreateHax.MC;
 
-public class FlyHack extends Toggleable {
-    private final KeyMapping toggleKey = new KeyMapping("Fly-Hack", 66, "Hax");
+public class FlyHack implements IHack {
     private float speed = 1;
+    private boolean running = false;
 
     @Override
-    public KeyMapping getToggleKey() {
-        return toggleKey;
-    }
-    @Override
-    public void onModifyModifiable(double delta) {
+    public void onModify(double delta) {
         speed = (float) Math.max(0.1f, speed + delta / 10);
 
         DecimalFormat df = new DecimalFormat("#.##");
         Util.sendActionbarMessage("Fly speed set to: §2" + df.format(speed));
     }
 
-    public FlyHack() {
-        ClientRegistry.registerKeyBinding(toggleKey);
-        ActiveHaxRenderer.registerHack(this);
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @SubscribeEvent
-    public void performFly(TickEvent.ClientTickEvent clientTickEvent) {
-        if (MC.player == null || !running) return;
+    @Override
+    public void saveTick() {
+        MC.player.getAbilities().mayfly = true;
 
         Vec3 movement = getJumpVec().scale(speed);
         AllPackets.channel.sendToServer(new ClientMotionPacket(movement, true, 100));
@@ -77,12 +61,18 @@ public class FlyHack extends Toggleable {
     }
 
     @Override
-    public boolean isOn() {
+    public boolean isRunning() {
         return running;
+    }
+
+    @Override
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     @Override
     public String getName() {
         return "FlyHack";
     }
+
 }

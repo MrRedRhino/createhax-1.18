@@ -1,9 +1,6 @@
 package org.pipeman.createhax.hax;
 
 import com.simibubi.create.AllBlocks;
-import org.pipeman.createhax.ActiveHaxRenderer;
-import org.pipeman.createhax.Util;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,38 +16,33 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.pipeman.createhax.CreateHax;
+import org.pipeman.createhax.Util;
 
 import java.util.Map;
 
-public class VillagerTradeFinder extends Toggleable {
-    private final KeyMapping toggleKey = new KeyMapping("Villager trade finder", 66, "Hax");
+public class VillagerTradeFinder implements IHack {
     private BlockPos bearingPos;
     private Villager villager;
     private String enchantmentName;
     private BlockPos crankPos;
     int stage = 0; // 1=press crank, 2=press bearing, 3=wait for villager to have no job, 4=if villager has
-    // job, press him, 5=check gui
+    // job -> press him, 5=check gui
     boolean bearingTurning = false;
+    private boolean running = false;
 
     public VillagerTradeFinder() {
-        ClientRegistry.registerKeyBinding(toggleKey);
-        ActiveHaxRenderer.registerHack(this);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @SubscribeEvent
-    public void tick(TickEvent.ClientTickEvent event) {
-        if (crankPos == null || enchantmentName == null || bearingPos == null || villager == null || !running || CreateHax.MC.getConnection() == null) return;
-        if (event.phase!=TickEvent.Phase.START || event.side!=LogicalSide.CLIENT) return;
+    @Override
+    public void saveTick() {
+        if (crankPos == null || enchantmentName == null || bearingPos == null || villager == null) return;
 
         switch (stage) {
             case 1 -> {
@@ -105,32 +97,29 @@ public class VillagerTradeFinder extends Toggleable {
     }
 
     @Override
-    public boolean isOn() {
+    public boolean isRunning() {
         return running;
     }
 
     @Override
-    public String getName() {
-        return "TradeFinder";
-    }
+    public void setRunning(boolean running) {
+        this.running = running;
 
-    @Override
-    public KeyMapping getToggleKey() {
-        return toggleKey;
-    }
-
-    @Override
-    public void onToggle() {
         Util.showToggleMessage(getName(), running);
         stage = 1;
         if (running) {
             Util.sendChatMessage("Left click a bearing, left click a hand crank, right click a villager and send the " +
-                    "enchantment name in chat.");
+                                 "enchantment name in chat to start the TradeFinder.");
         } else {
             bearingPos = null;
             villager = null;
             enchantmentName = null;
         }
+    }
+
+    @Override
+    public String getName() {
+        return "TradeFinder";
     }
 
     @SubscribeEvent
@@ -173,10 +162,5 @@ public class VillagerTradeFinder extends Toggleable {
             }
         }
         Util.sendActionbarMessage("Enchantment not found: " + event.getMessage());
-    }
-
-    @Override
-    public void onModifyModifiable(double delta) {
-
     }
 }
