@@ -10,36 +10,37 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraftforge.fluids.IFluidBlock;
 import org.pipeman.createhax.Util;
+import org.pipeman.createhax.settings.IntSetting;
 
 public class SuperSponge implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
-    int blocksPerTick = 4;
+    private final IntSetting bpt = new IntSetting("supersponge-blocks-per-tick", 4).setMin(0).save();
     int blocksThisTick = 0;
     private boolean running = false;
 
     @Override
     public void onModify(double delta) {
-        blocksPerTick = (int) Math.max(0, blocksPerTick + delta);
-
-        Util.sendActionbarMessage("Blocks per tick set to: §2" + blocksPerTick +
-                                  (blocksPerTick == 0 ? " " + "(unlimited)" : ""));
+        bpt.onScroll(delta);
+        int bpt = this.bpt.get();
+        Util.sendActionbarMessage("Blocks per tick set to: §2" + bpt + (bpt == 0 ? " " + "(unlimited)" : ""));
     }
 
     @Override
     public void saveTick() {
         if (MC.player == null || MC.level == null || !running) return;
+        int bpt = this.bpt.get();
         BlockPos playerPos = MC.player.blockPosition();
 
         for (int y = 4; y > -4; y--) {
             for (int x = -4; x < 4; x++) {
                 for (int z = -4; z < 4; z++) {
                     if (isFluidSource(playerPos.offset(x, y, z), MC.player.level)) {
-                        if (blocksThisTick <= blocksPerTick || blocksThisTick == 0) {
+                        if (blocksThisTick <= bpt || blocksThisTick == 0) {
                             placeAndBreakCasing(playerPos.offset(x, y, z));
                             blocksThisTick++;
                         }
                     }
-                    if (blocksThisTick >= blocksPerTick && blocksPerTick != 0) {
+                    if (blocksThisTick >= bpt && bpt != 0) {
                         blocksThisTick = 0;
                         return;
                     }

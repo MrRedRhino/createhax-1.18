@@ -6,12 +6,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.pipeman.createhax.hax.*;
 import org.pipeman.createhax.hax.bb.BedrockBreaker;
+import org.pipeman.createhax.settings.SettingSaver;
+
+import java.io.IOException;
 
 @Mod("createhax")
 public class CreateHax {
 //    public static final Minecraft MC = Minecraft.getInstance();
 
-    public CreateHax() {
+    public CreateHax() throws IOException {
         if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) return;
 
         HackManager.INSTANCE.registerHack(new FlyHack(), new KeyMapping("Fly-Hack", 66, "Hax"));
@@ -27,5 +30,13 @@ public class CreateHax {
         HackManager.INSTANCE.registerHack(new FullbrightHack(), new KeyMapping("Fullbright", 66, "Hax"));
 
         HackManager.INSTANCE.registerHack(new ConstantHonkHack(), new KeyMapping("Constant Honking", 66, "Hax"));
+
+        SettingSaver.read();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                SettingSaver.save();
+            } catch (Exception ignored) {
+            }
+        }));
     }
 }

@@ -4,21 +4,22 @@ import com.simibubi.create.content.contraptions.components.structureMovement.syn
 import com.simibubi.create.foundation.networking.AllPackets;
 import net.minecraft.client.Minecraft;
 import org.pipeman.createhax.Util;
+import org.pipeman.createhax.settings.FloatSetting;
 
 import java.text.DecimalFormat;
 
 public class FlyHack implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
-    private float speed = 0.05f;
+    private final FloatSetting speed = new FloatSetting("flyhack-speed", 0.05f).setMin(0);
     private boolean running = false;
 
     @Override
     public void onModify(double delta) {
-        speed = (float) Math.max(0, speed + delta / 100);
+        speed.onScroll(delta / 100);
 
         DecimalFormat df = new DecimalFormat("#.##");
-        Util.sendActionbarMessage("Fly speed set to: §2" + df.format(speed));
-        MC.player.getAbilities().setFlyingSpeed(speed);
+        Util.sendActionbarMessage("Fly speed set to: §2" + df.format(speed.get()));
+        MC.player.getAbilities().setFlyingSpeed(speed.get());
     }
 
     @Override

@@ -14,6 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Optional;
+
 public class Util {
     private static final Minecraft MC = Minecraft.getInstance();
 
@@ -65,6 +67,22 @@ public class Util {
 
     public static void sendChatMessage(String message) {
         MC.gui.getChat().addMessage(Component.nullToEmpty(message));
+    }
+
+    public static Optional<Integer> parseInt(String input) {
+        try {
+            return Optional.of(Integer.parseInt(input));
+        } catch (NumberFormatException ignored) {
+            return Optional.empty();
+        }
+    }
+
+    public static Optional<Float> parseFloat(String input) {
+        try {
+            return Optional.of(Float.parseFloat(input));
+        } catch (NumberFormatException ignored) {
+            return Optional.empty();
+        }
     }
 
     public static boolean hasNecessaryBlocks(String hackName, ItemStack... items) {
