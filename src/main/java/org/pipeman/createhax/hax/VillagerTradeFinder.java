@@ -1,6 +1,7 @@
 package org.pipeman.createhax.hax;
 
 import com.simibubi.create.AllBlocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,12 +22,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.pipeman.createhax.CreateHax;
 import org.pipeman.createhax.Util;
 
 import java.util.Map;
 
 public class VillagerTradeFinder implements IHack {
+    private static final Minecraft MC = Minecraft.getInstance();
     private BlockPos bearingPos;
     private Villager villager;
     private String enchantmentName;
@@ -64,19 +65,19 @@ public class VillagerTradeFinder implements IHack {
                     stage++;
                     ServerboundInteractPacket packet = ServerboundInteractPacket.createInteractionPacket(
                             villager, false, InteractionHand.MAIN_HAND);
-                    CreateHax.MC.getConnection().send(packet);
+                    MC.getConnection().send(packet);
                 } else {
                     stage = 2;
                 }
             }
             case 4 -> {
-                if (CreateHax.MC.screen instanceof MerchantScreen screen) {
+                if (MC.screen instanceof MerchantScreen screen) {
                     for (MerchantOffer offer : screen.getMenu().getOffers()) {
                         for (Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(offer.getResult()).entrySet()) {
                             if (entry.getKey().getMaxLevel() == entry.getValue()) {
                                 if (enchantmentName != null && enchantmentName.equals(entry.getKey().getRegistryName().toString())) {
                                     Util.sendActionbarMessage("BOOK FOUND!");
-                                    CreateHax.MC.screen.onClose();
+                                    MC.screen.onClose();
                                     running = false;
                                     bearingPos = null;
                                     villager = null;
@@ -87,7 +88,7 @@ public class VillagerTradeFinder implements IHack {
                         }
                     }
                     stage = 1;
-                    CreateHax.MC.screen.onClose();
+                    MC.screen.onClose();
                 } else {
                     stage = 3;
                 }

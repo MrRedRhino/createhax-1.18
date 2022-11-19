@@ -1,18 +1,21 @@
 package org.pipeman.createhax;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.*;
+import net.minecraft.network.protocol.game.ServerboundPickItemPacket;
+import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
+import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import static org.pipeman.createhax.CreateHax.MC;
-
 public class Util {
+    private static final Minecraft MC = Minecraft.getInstance();
 
     public static void sendItemUsePacket(BlockPos pos, Direction dir) {
         if (MC.getConnection() == null) return;
@@ -50,17 +53,17 @@ public class Util {
         if (MC.getConnection() == null || MC.player == null) return;
 
         ServerboundPlayerCommandPacket.Action packet = sneaking ?
-        ServerboundPlayerCommandPacket.Action.PRESS_SHIFT_KEY : ServerboundPlayerCommandPacket.Action.RELEASE_SHIFT_KEY;
+                ServerboundPlayerCommandPacket.Action.PRESS_SHIFT_KEY : ServerboundPlayerCommandPacket.Action.RELEASE_SHIFT_KEY;
 
         MC.getConnection().send(new ServerboundPlayerCommandPacket(MC.player, packet));
     }
 
-    public static void sendActionbarMessage(String message){
-        MC.gui.setOverlayMessage(Component.nullToEmpty(message),false);
+    public static void sendActionbarMessage(String message) {
+        MC.gui.setOverlayMessage(Component.nullToEmpty(message), false);
     }
 
 
-    public static void sendChatMessage(String message){
+    public static void sendChatMessage(String message) {
         MC.gui.getChat().addMessage(Component.nullToEmpty(message));
     }
 

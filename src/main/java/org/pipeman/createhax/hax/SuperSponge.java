@@ -2,16 +2,17 @@ package org.pipeman.createhax.hax;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraftforge.fluids.IFluidBlock;
-import org.pipeman.createhax.CreateHax;
 import org.pipeman.createhax.Util;
 
 public class SuperSponge implements IHack {
+    private static final Minecraft MC = Minecraft.getInstance();
     int blocksPerTick = 4;
     int blocksThisTick = 0;
     private boolean running = false;
@@ -26,13 +27,13 @@ public class SuperSponge implements IHack {
 
     @Override
     public void saveTick() {
-        if (CreateHax.MC.player == null || CreateHax.MC.level == null || !running) return;
-        BlockPos playerPos = CreateHax.MC.player.blockPosition();
+        if (MC.player == null || MC.level == null || !running) return;
+        BlockPos playerPos = MC.player.blockPosition();
 
         for (int y = 4; y > -4; y--) {
             for (int x = -4; x < 4; x++) {
                 for (int z = -4; z < 4; z++) {
-                    if (isFluidSource(playerPos.offset(x, y, z), CreateHax.MC.player.level)) {
+                    if (isFluidSource(playerPos.offset(x, y, z), MC.player.level)) {
                         if (blocksThisTick <= blocksPerTick || blocksThisTick == 0) {
                             placeAndBreakCasing(playerPos.offset(x, y, z));
                             blocksThisTick++;
@@ -48,7 +49,7 @@ public class SuperSponge implements IHack {
     }
 
     private void placeAndBreakCasing(BlockPos pos) {
-        if (CreateHax.MC.getConnection() == null || CreateHax.MC.player == null) return;
+        if (MC.getConnection() == null || MC.player == null) return;
 
         Util.switchToItemInHotbar(AllBlocks.ANDESITE_CASING.asStack());
         Util.sendItemUsePacket(pos, Direction.UP);

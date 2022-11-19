@@ -2,13 +2,13 @@ package org.pipeman.createhax.hax;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.sync.ClientMotionPacket;
 import com.simibubi.create.foundation.networking.AllPackets;
+import net.minecraft.client.Minecraft;
 import org.pipeman.createhax.Util;
 
 import java.text.DecimalFormat;
 
-import static org.pipeman.createhax.CreateHax.MC;
-
 public class FlyHack implements IHack {
+    private static final Minecraft MC = Minecraft.getInstance();
     private float speed = 0.05f;
     private boolean running = false;
 

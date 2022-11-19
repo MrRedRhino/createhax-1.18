@@ -1,6 +1,7 @@
 package org.pipeman.createhax.hax;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -8,19 +9,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.pipeman.createhax.CreateHax;
 
 import java.util.HashMap;
 
 public class ShowContraptionInv implements IHack {
+    private static final Minecraft MC = Minecraft.getInstance();
     private String overlayContent;
     private boolean running = false;
 
     @Override
     public void saveTick() {
-        if (CreateHax.MC.hitResult == null || CreateHax.MC.hitResult.getType() != HitResult.Type.ENTITY) return;
+        if (MC.hitResult == null || MC.hitResult.getType() != HitResult.Type.ENTITY) return;
 
-        EntityHitResult result = ((EntityHitResult) CreateHax.MC.hitResult);
+        EntityHitResult result = ((EntityHitResult) MC.hitResult);
 
         Entity entity = result.getEntity();
         if (entity.getPassengers().size() == 0) return;

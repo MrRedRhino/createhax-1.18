@@ -1,12 +1,12 @@
 package org.pipeman.createhax.hax;
 
+import net.minecraft.client.Minecraft;
 import org.pipeman.createhax.Util;
 
 import java.text.DecimalFormat;
 
-import static org.pipeman.createhax.CreateHax.MC;
-
 public class FullbrightHack implements IHack {
+    private static final Minecraft MC = Minecraft.getInstance();
     private boolean running = false;
     private double originalGamma = 0;
     private float gamma = 1;

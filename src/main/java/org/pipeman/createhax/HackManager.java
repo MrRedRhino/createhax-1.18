@@ -2,6 +2,7 @@ package org.pipeman.createhax;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.InputEvent;
@@ -14,9 +15,8 @@ import org.pipeman.createhax.hax.IHack;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.pipeman.createhax.CreateHax.MC;
-
 public class HackManager {
+    private static final Minecraft MC = Minecraft.getInstance();
     private final Map<ToggleState, IHack> hacks = new HashMap<>();
     public static final HackManager INSTANCE = new HackManager();
 
