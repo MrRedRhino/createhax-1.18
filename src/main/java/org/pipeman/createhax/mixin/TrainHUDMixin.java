@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(value = TrainHUD.class, remap = false)
 public class TrainHUDMixin {
-    @ModifyArg(method = "onScroll", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Mth;clamp(DDD)D"), index = 1)
-    private static double infiniteNegativeScroll(double p_14009_) {
+    @ModifyArg(method = "onScroll", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Mth;clamp(DDD)D"), index = 1, remap = true)
+    private static double bread(double p_14009_) {
         return -Double.MAX_VALUE;
     }
 }
