@@ -31,6 +31,8 @@ public class CreateHax {
 
         HackManager.INSTANCE.registerHack(new ConstantHonkHack(), new KeyMapping("Constant Honking", 66, "Hax"));
 
+        HackManager.INSTANCE.registerHack(new FastRightClickHack(), new KeyMapping("Fast Right Click", 66, "Hax"));
+
         SettingSaver.read();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
