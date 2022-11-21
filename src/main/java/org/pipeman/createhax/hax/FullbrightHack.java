@@ -1,16 +1,19 @@
 package org.pipeman.createhax.hax;
 
 import net.minecraft.client.Minecraft;
+import org.pipeman.createhax.HackManager;
 import org.pipeman.createhax.Util;
 import org.pipeman.createhax.settings.FloatSetting;
 
 import java.text.DecimalFormat;
+import java.util.Properties;
 
 public class FullbrightHack implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
     private boolean running = false;
     private double originalGamma = 0;
-    private final FloatSetting gamma = new FloatSetting("fullbright-gamma", 1).setMin(0).save();
+    private final String propertiesKey = "fullbright-";
+    private final FloatSetting gamma = new FloatSetting(propertiesKey + "gamma", 1).setMin(0);
 
     @Override
     public boolean isRunning() {
@@ -31,6 +34,18 @@ public class FullbrightHack implements IHack {
     @Override
     public String getName() {
         return "Fullbright";
+    }
+
+    @Override
+    public void saveState(Properties prop) {
+        HackManager.put(prop, propertiesKey + "running", String.valueOf(running));
+        gamma.save(prop);
+    }
+
+    @Override
+    public void readState(Properties prop) {
+        setRunning(HackManager.get(prop, propertiesKey + "running", false));
+        gamma.read(prop);
     }
 
     @Override

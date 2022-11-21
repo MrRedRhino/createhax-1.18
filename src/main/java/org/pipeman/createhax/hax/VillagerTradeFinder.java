@@ -25,6 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.pipeman.createhax.Util;
 
 import java.util.Map;
+import java.util.Properties;
 
 public class VillagerTradeFinder implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
@@ -120,6 +121,16 @@ public class VillagerTradeFinder implements IHack {
     @Override
     public String getName() {
         return "TradeFinder";
+    }
+
+    @Override
+    public void saveState(Properties prop) {
+
+    }
+
+    @Override
+    public void readState(Properties prop) {
+
     }
 
     @SubscribeEvent

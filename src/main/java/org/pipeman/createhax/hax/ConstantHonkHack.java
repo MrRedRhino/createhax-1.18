@@ -5,13 +5,16 @@ import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEn
 import com.simibubi.create.foundation.networking.AllPackets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.AABB;
+import org.pipeman.createhax.HackManager;
 
 import java.util.List;
+import java.util.Properties;
 
 public class ConstantHonkHack implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
     private int cooldown = 0;
     private boolean running = false;
+    private final String propertiesKey = "constant-honk-";
 
     @Override
     public boolean isRunning() {
@@ -44,5 +47,15 @@ public class ConstantHonkHack implements IHack {
     @Override
     public String getName() {
         return "ConstantHonk";
+    }
+
+    @Override
+    public void saveState(Properties prop) {
+        HackManager.put(prop, propertiesKey + "running", String.valueOf(isRunning()));
+    }
+
+    @Override
+    public void readState(Properties prop) {
+        setRunning(HackManager.get(prop, propertiesKey + "running", false));
     }
 }

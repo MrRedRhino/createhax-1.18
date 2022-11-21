@@ -9,12 +9,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraftforge.fluids.IFluidBlock;
+import org.pipeman.createhax.HackManager;
 import org.pipeman.createhax.Util;
 import org.pipeman.createhax.settings.IntSetting;
 
+import java.util.Properties;
+
 public class SuperSponge implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
-    private final IntSetting bpt = new IntSetting("supersponge-blocks-per-tick", 4).setMin(0).save();
+    private final String propertiesKey = "super-sponge-";
+    private final IntSetting bpt = new IntSetting(propertiesKey + "blocks-per-tick", 4).setMin(0);
     int blocksThisTick = 0;
     private boolean running = false;
 
@@ -93,5 +97,17 @@ public class SuperSponge implements IHack {
     @Override
     public String getName() {
         return "SuperSponge";
+    }
+
+    @Override
+    public void saveState(Properties prop) {
+        HackManager.put(prop, propertiesKey + "running", String.valueOf(isRunning()));
+        bpt.save(prop);
+    }
+
+    @Override
+    public void readState(Properties prop) {
+        setRunning(HackManager.get(prop, propertiesKey + "running", false));
+        bpt.read(prop);
     }
 }

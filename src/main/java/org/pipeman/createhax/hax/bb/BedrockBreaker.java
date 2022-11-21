@@ -5,12 +5,16 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.pipeman.createhax.HackManager;
 import org.pipeman.createhax.hax.IHack;
+
+import java.util.Properties;
 
 public class BedrockBreaker implements IHack {
     private boolean running = false;
     public static boolean breakEverything = false;
     boolean lmbIsPressed = false;
+    private final String propertiesKey = "bedrock-breaker-";
 
     public BedrockBreaker() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -29,6 +33,16 @@ public class BedrockBreaker implements IHack {
     @Override
     public String getName() {
         return "BedrockBreaker";
+    }
+
+    @Override
+    public void saveState(Properties prop) {
+        HackManager.put(prop, propertiesKey + "running", String.valueOf(isRunning()));
+    }
+
+    @Override
+    public void readState(Properties prop) {
+        setRunning(HackManager.get(prop, propertiesKey + "running", false));
     }
 
     @Override

@@ -3,14 +3,17 @@ package org.pipeman.createhax.hax;
 import com.simibubi.create.content.contraptions.components.structureMovement.sync.ClientMotionPacket;
 import com.simibubi.create.foundation.networking.AllPackets;
 import net.minecraft.client.Minecraft;
+import org.pipeman.createhax.HackManager;
 import org.pipeman.createhax.Util;
 import org.pipeman.createhax.settings.FloatSetting;
 
 import java.text.DecimalFormat;
+import java.util.Properties;
 
 public class FlyHack implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
-    private final FloatSetting speed = new FloatSetting("flyhack-speed", 0.05f).setMin(0);
+    private final String propertiesKey = "fly-hack-";
+    private final FloatSetting speed = new FloatSetting(propertiesKey + "speed", 0.05f).setMin(0);
     private boolean running = false;
 
     @Override
@@ -46,4 +49,15 @@ public class FlyHack implements IHack {
         return "FlyHack";
     }
 
+    @Override
+    public void saveState(Properties prop) {
+        HackManager.put(prop, propertiesKey + "running", String.valueOf(isRunning()));
+        speed.save(prop);
+    }
+
+    @Override
+    public void readState(Properties prop) {
+        setRunning(HackManager.get(prop, propertiesKey + "running", false));
+        speed.read(prop);
+    }
 }

@@ -11,6 +11,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.HashMap;
+import java.util.Properties;
 
 public class ShowContraptionInv implements IHack {
     private static final Minecraft MC = Minecraft.getInstance();
@@ -67,5 +68,15 @@ public class ShowContraptionInv implements IHack {
     @Override
     public String getName() {
         return "Contraption Inventory Renderer";
+    }
+
+    @Override
+    public void saveState(Properties prop) {
+
+    }
+
+    @Override
+    public void readState(Properties prop) {
+
     }
 }

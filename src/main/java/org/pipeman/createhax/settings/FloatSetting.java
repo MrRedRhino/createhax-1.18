@@ -1,8 +1,7 @@
 package org.pipeman.createhax.settings;
 
-import org.pipeman.createhax.Util;
+import org.pipeman.createhax.HackManager;
 
-import java.util.Optional;
 import java.util.Properties;
 
 public class FloatSetting implements Setting<Float> {
@@ -26,24 +25,14 @@ public class FloatSetting implements Setting<Float> {
         return this;
     }
 
-    public FloatSetting save() {
-        return SettingSaver.registerSetting(this);
-    }
-
     @Override
     public void save(Properties p) {
-        p.put(propertiesKey, String.valueOf(value));
+        HackManager.put(p, propertiesKey, String.valueOf(value));
     }
 
     @Override
     public void read(Properties p) {
-        String val = (String) p.get(propertiesKey);
-        if (val == null) p.put(propertiesKey, String.valueOf(value));
-        else {
-            Optional<Float> aFloat = Util.parseFloat(val);
-            if (aFloat.isEmpty()) p.put(propertiesKey, String.valueOf(value));
-            else set(aFloat.get());
-        }
+        set(HackManager.get(p, propertiesKey, value));
     }
 
     @Override

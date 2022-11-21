@@ -4,17 +4,18 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.HitResult;
+import org.pipeman.createhax.HackManager;
 import org.pipeman.createhax.Util;
 import org.pipeman.createhax.invokers.IMinecraftInvoker;
 import org.pipeman.createhax.settings.IntSetting;
 
+import java.util.Properties;
+
 public class FastRightClickHack implements IHack {
     private final Minecraft MC = Minecraft.getInstance();
     private boolean running = false;
-    private final IntSetting bpt = new IntSetting("fastrightclick-blocks-per-tick", 4)
-            .setMin(1)
-            .setMax(64)
-            .save();
+    private final String propertiesKey = "fast-right-click-";
+    private final IntSetting bpt = new IntSetting(propertiesKey + "blocks-per-tick", 4).setMin(1).setMax(64);
 
     @Override
     public boolean isRunning() {
@@ -29,6 +30,18 @@ public class FastRightClickHack implements IHack {
     @Override
     public String getName() {
         return "FastRightClick";
+    }
+
+    @Override
+    public void saveState(Properties prop) {
+        HackManager.put(prop, propertiesKey + "running", String.valueOf(isRunning()));
+        bpt.save(prop);
+    }
+
+    @Override
+    public void readState(Properties prop) {
+        setRunning(HackManager.get(prop, propertiesKey + "running", false));
+        bpt.read(prop);
     }
 
     @Override

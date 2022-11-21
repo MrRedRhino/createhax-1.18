@@ -1,8 +1,7 @@
 package org.pipeman.createhax.settings;
 
-import org.pipeman.createhax.Util;
+import org.pipeman.createhax.HackManager;
 
-import java.util.Optional;
 import java.util.Properties;
 
 public class IntSetting implements Setting<Integer> {
@@ -26,24 +25,14 @@ public class IntSetting implements Setting<Integer> {
         return this;
     }
 
-    public IntSetting save() {
-        return SettingSaver.registerSetting(this);
-    }
-
     @Override
     public void save(Properties p) {
-        p.put(propertiesKey, String.valueOf(value));
+        HackManager.put(p, propertiesKey, String.valueOf(value));
     }
 
     @Override
     public void read(Properties p) {
-        String val = (String) p.get(propertiesKey);
-        if (val == null) p.put(propertiesKey, String.valueOf(value));
-        else {
-            Optional<Integer> anInt = Util.parseInt(val);
-            if (anInt.isEmpty()) p.put(propertiesKey, String.valueOf(value));
-            else set(anInt.get());
-        }
+        set(HackManager.get(p, propertiesKey, value));
     }
 
     @Override
