@@ -4,10 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "createhax.refmap.json",
   "mixins": [
+    "EntityMixin",
     "ToolsMixin",
     "TrainHUDMixin"
   ],
   "client": [
+    "KeyMappingMixin",
     "MinecraftMixin"
   ],
   "injectors": {

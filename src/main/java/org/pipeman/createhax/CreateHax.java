@@ -9,28 +9,40 @@ import org.pipeman.createhax.hax.bb.BedrockBreaker;
 
 @Mod("createhax")
 public class CreateHax {
-//    public static final Minecraft MC = Minecraft.getInstance();
+    private static final String HAX = "Hax";
 
     public CreateHax() {
         if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) return;
 
-        HackManager.INSTANCE.registerHack(new FlyHack(), new KeyMapping("Fly-Hack", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new FlyHack(), key("Fly-Hack"));
 
-        HackManager.INSTANCE.registerHack(new SuperSponge(), new KeyMapping("Super Sponge", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new SuperSponge(), key("Super Sponge"));
 
-        HackManager.INSTANCE.registerHack(new VillagerTradeFinder(), new KeyMapping("Villager trade finder", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new VillagerTradeFinder(), key("Villager trade finder"));
 
-        HackManager.INSTANCE.registerHack(new BedrockBreaker(), new KeyMapping("Bedrock-Breaker", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new BedrockBreaker(), key("Bedrock-Breaker"));
 
-        HackManager.INSTANCE.registerHack(new ShowContraptionInv(), new KeyMapping("Show contraption inventory", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new ShowContraptionInv(), key("Show contraption inventory"));
 
-        HackManager.INSTANCE.registerHack(new FullbrightHack(), new KeyMapping("Fullbright", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new FullbrightHack(), key("Fullbright"));
 
-        HackManager.INSTANCE.registerHack(new ConstantHonkHack(), new KeyMapping("Constant Honking", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new ConstantHonkHack(), key("Constant Honking"));
 
-        HackManager.INSTANCE.registerHack(new FastRightClickHack(), new KeyMapping("Fast Right Click", 66, "Hax"));
+        HackManager.INSTANCE.registerHack(new FastRightClickHack(), key("Fast Right Click"));
+
+        HackManager.INSTANCE.registerHack(AimLock.INSTANCE, key("Aim Lock"));
+
+        HackManager.INSTANCE.registerHack(HoldUse.INSTANCE, key("Hold Use"));
 
         Util.ignoreException(HackManager.INSTANCE::read);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> Util.ignoreException(HackManager.INSTANCE::save)));
+    }
+
+    private static KeyMapping key(String name, int code) {
+        return new KeyMapping(name, code, HAX);
+    }
+
+    private static KeyMapping key(String name) {
+        return key(name, 66);
     }
 }
